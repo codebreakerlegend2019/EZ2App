@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EasyTwoJuetengApp.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="White"
+    BackgroundImageSource="login_background.jpg">
+    <ScrollView>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Frame
+                Margin="20"
+                BackgroundColor="#B3E5FC"
+                CornerRadius="20"
+                HasShadow="True"
+                Opacity=".85">
+
+                <StackLayout HorizontalOptions="CenterAndExpand">
+                    <Image
+                        Aspect="Fill"
+                        HeightRequest="150"
+                        HorizontalOptions="Fill"
+                        Source="profile.png" />
+                    <Label
+                        FontFamily="AdventPro"
+                        FontSize="50"
+                        HorizontalTextAlignment="Center"
+                        Text="Agent Login"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+                    <StackLayout Margin="20">
+                        <Entry
+                            FontFamily="AdventPro"
+                            FontSize="25"
+                            IsEnabled="{Binding IsControlEnable}"
+                            Placeholder="Username"
+                            ReturnType="Next"
+                            TabIndex="1"
+                            Text="{Binding Username}" />
+                        <Entry
+                            FontFamily="AdventPro"
+                            FontSize="25"
+                            IsEnabled="{Binding IsControlEnable}"
+                            IsPassword="True"
+                            Placeholder="Password"
+                            ReturnCommand="{Binding LoginCommand}"
+                            TabIndex="2"
+                            Text="{Binding Password}" />
+                        <StackLayout Orientation="Horizontal">
+                            <Button
+                                BackgroundColor="#0230DF"
+                                Command="{Binding LoginCommand}"
+                                CornerRadius="20"
+                                FontFamily="AdventPro"
+                                HorizontalOptions="FillAndExpand"
+                                IsEnabled="{Binding IsControlEnable}"
+                                Text="Login"
+                                TextColor="White" />
+                            <Button
+                                BackgroundColor="#D50000"
+                                Command="{Binding ResetCommand}"
+                                CornerRadius="20"
+                                FontFamily="AdventPro"
+                                HorizontalOptions="FillAndExpand"
+                                IsEnabled="{Binding IsControlEnable}"
+                                Text="Reset"
+                                TextColor="White" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+
+            </Frame>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

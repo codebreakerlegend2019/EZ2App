@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<custompages:CustomTitleViewPage
+    x:Class="EasyTwoJuetengApp.Views.CustomerRelatedPages.AddOrEditCustomerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customerModel="clr-namespace:EasyTwoJuetengApp.Models.CustomerRelated"
+    xmlns:custompages="clr-namespace:EasyTwoJuetengApp.Views.CustomPages"
+    xmlns:local="clr-namespace:EasyTwoJuetengApp.Converters"
+    xmlns:material="clr-namespace:EasyTwoJuetengApp.Helpers"
+    xmlns:prism="http://prismlibrary.com"
+    x:Name="MyPage"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    IsToolBarButtonVisible="False"
+    Shell.TabBarIsVisible="False">
+    <custompages:CustomTitleViewPage.Resources>
+        <ResourceDictionary>
+            <local:IntToBoolConverter x:Key="intToBool" />
+            <local:IsValidEmailConverter x:Key="isValidEmailConverter" />
+        </ResourceDictionary>
+    </custompages:CustomTitleViewPage.Resources>
+    <ScrollView>
+        <StackLayout Padding="10" HorizontalOptions="FillAndExpand">
+            <Label
+                FontFamily="Roboto"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Fill out the Following:"
+                TextColor="Black" />
+            <StackLayout>
+                <Label
+                    FontFamily="Roboto"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Start"
+                    Text="First Name:"
+                    TextColor="Black" />
+                <Entry
+                    x:Name="firstName"
+                    FontFamily="Roboto"
+                    Placeholder="Firstname (Required)"
+                    PlaceholderColor="Gray"
+                    Text="{Binding FirstName}"
+                    TextColor="Black" />
+
+                <Label
+                    FontFamily="Roboto"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Start"
+                    Text="Middle Name:"
+                    TextColor="Black" />
+                <Entry
+                    x:Name="middleName"
+                    FontFamily="Roboto"
+                    Placeholder="Middlename (Required)"
+                    PlaceholderColor="Gray"
+                    Text="{Binding MiddleName}"
+                    TextColor="Black" />
+
+                <Label
+                    FontFamily="Roboto"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Start"
+                    Text="Lastname Name:"
+                    TextColor="Black" />
+                <Entry
+                    x:Name="lastName"
+                    FontFamily="Roboto"
+                    Placeholder="Lastname (Required)"
+                    PlaceholderColor="Gray"
+                    Text="{Binding LastName}"
+                    TextColor="Black" />
+
+                <Label
+                    FontFamily="Roboto"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Start"
+                    Text="Cellphone #:"
+                    TextColor="Black" />
+                <StackLayout Orientation="Horizontal">
+                    <Entry
+                        FontFamily="Roboto"
+                        FontSize="Subtitle"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Start"
+                        IsEnabled="False"
+                        Text="+63"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                    <Entry
+                        x:Name="cellNo"
+                        ClearButtonVisibility="WhileEditing"
+                        FontFamily="Roboto"
+                        HorizontalOptions="FillAndExpand"
+                        Keyboard="Telephone"
+                        MaxLength="10"
+                        Placeholder="ex. 9051234567 (10 Digits)"
+                        PlaceholderColor="Gray"
+                        Text="{Binding CellphoneNumber}"
+                        TextColor="Black" />
+                </StackLayout>
+                <Label
+                    FontFamily="Roboto"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Start"
+                    Text="Email:"
+                    TextColor="Black" />
+                <Entry
+                    x:Name="emailAddress"
+                    FontFamily="Roboto"
+                    Placeholder="Email (Required)"
+                    PlaceholderColor="Gray"
+                    Text="{Binding EmailAddress}"
+                    TextColor="Black" />
+
+            </StackLayout>
+
+            <StackLayout IsVisible="False" Orientation="Horizontal">
+                <StackLayout.Triggers>
+                    <MultiTrigger TargetType="StackLayout">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding FormAction}" Value="Add" />
+                        </MultiTrigger.Conditions>
+
+                        <Setter Property="IsVisible" Value="True" />
+                    </MultiTrigger>
+                </StackLayout.Triggers>
+                <Button
+                    BackgroundColor="#0230DF"
+                    Command="{Binding SaveCommand}"
+                    CornerRadius="20"
+                    FontFamily="Roboto"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsControlEnable}"
+                    Text="Save"
+                    TextColor="White">
+                    <Button.Triggers>
+                        <MultiTrigger TargetType="Button">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{Binding Source={x:Reference firstName}, Path=Text.Length, Converter={StaticResource intToBool}}" Value="True" />
+                                <BindingCondition Binding="{Binding Source={x:Reference middleName}, Path=Text.Length, Converter={StaticResource intToBool}}" Value="True" />
+                                <BindingCondition Binding="{Binding Source={x:Reference lastName}, Path=Text.Length, Converter={StaticResource intToBool}}" Value="True" />
+                                <BindingCondition Binding="{Binding Source={x:Reference cellNo}, Path=Text.Length, Converter={StaticResource intToBool}}" Value="True" />
+                                <BindingCondition Binding="{Binding Source={x:Reference emailAddress}, Path=Text, Converter={StaticResource isValidEmailConverter}}" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True" />
+                        </MultiTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button
+                    BackgroundColor="#D50000"
+                    CornerRadius="20"
+                    FontFamily="Roboto"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Reset"
+                    TextColor="White" />
+            </StackLayout>
+            <StackLayout IsVisible="False" Orientation="Horizontal">
+                <StackLayout.Triggers>
+                    <MultiTrigger TargetType="StackLayout">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding FormAction}" Value="Edit" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="True" />
+                    </MultiTrigger>
+                </StackLayout.Triggers>
+                <Button
+                    BackgroundColor="#0230DF"
+                    Command="{Binding UpdateCommand}"
+                    CornerRadius="20"
+                    FontFamily="Roboto"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsEditable}"
+                    Text="Update"
+                    TextColor="White" />
+                <Button
+                    BackgroundColor="#D50000"
+                    CornerRadius="20"
+                    FontFamily="Roboto"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Reset"
+                    TextColor="White" />
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+</custompages:CustomTitleViewPage>

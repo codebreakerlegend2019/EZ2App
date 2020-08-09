@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<custompages:CustomTitleViewPage
+    x:Class="EasyTwoJuetengApp.Views.CustomerRelatedPages.CustomerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custompages="clr-namespace:EasyTwoJuetengApp.Views.CustomPages"
+    xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    xmlns:material="clr-namespace:EasyTwoJuetengApp.Helpers"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:uxSkeletion="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    IsToolBarButtonVisible="True"
+    ToolBarButtonCommand="{Binding GoToAddCustomer}">
+    <custompages:CustomTitleViewPage.Resources>
+        <ResourceDictionary>
+            <FontImageSource
+                x:Key="ArrowUp"
+                FontFamily="MaterialFont"
+                Glyph="{x:Static material:MaterialFonts.ArrowUpDropCircle}"
+                Size="25"
+                Color="Black" />
+            <Style x:Key="ItemText" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+            <Style x:Key="ItemFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#80D8FF" />
+            </Style>
+        </ResourceDictionary>
+    </custompages:CustomTitleViewPage.Resources>
+    <custompages:CustomTitleViewPage.Content>
+        <Grid CompressedLayout.IsHeadless="true" RowDefinitions="Auto,*">
+            <Entry
+                Grid.Row="0"
+                Margin="10,0,10,0"
+                FontFamily="Roboto"
+                Placeholder="Search for Customers"
+                Text="{Binding KeyWord}">
+                <Entry.Triggers>
+                    <MultiTrigger TargetType="Entry">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding IsLoading}" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="True" />
+                    </MultiTrigger>
+                </Entry.Triggers>
+
+            </Entry>
+            <RefreshView
+                Grid.Row="1"
+                Command="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing}">
+                <CollectionView
+                    x:Name="CustomersCollectionView"
+                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                    uxSkeletion:Skeleton.IsBusy="{Binding IsLoading}"
+                    uxSkeletion:Skeleton.IsParent="True"
+                    ItemSizingStrategy="MeasureAllItems"
+                    ItemsSource="{Binding Customers}"
+                    ItemsUpdatingScrollMode="KeepItemsInView">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <StackLayout IsVisible="{Binding IsCustomerEmpty}">
+                            <Label
+                                FontFamily="RobotoCondensed"
+                                FontSize="Large"
+                                HorizontalTextAlignment="Center"
+                                Text="No Customer Found"
+                                TextColor="Black" />
+                            <lottie:AnimationView
+                                Animation="empty_anim.json"
+                                AutoPlay="True"
+                                HeightRequest="250"
+                                HorizontalOptions="CenterAndExpand"
+                                Loop="True"
+                                WidthRequest="250" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="20,0,20,20">
+
+                                <Frame
+                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                    uxSkeletion:Skeleton.BackgroundColor="#CFD8DC"
+                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                    uxSkeletion:Skeleton.IsParent="True"
+                                    CornerRadius="20"
+                                    HasShadow="True"
+                                    Style="{x:StaticResource ItemFrame}">
+                                    <Expander>
+                                        <Expander.Header>
+                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontFamily="MaterialFont"
+                                                    FontSize="Title"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{x:Static material:MaterialFonts.NaturePeople}" />
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontAttributes="Bold"
+                                                    FontFamily="Roboto"
+                                                    FontSize="Title"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{Binding FullName}" />
+
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontFamily="MaterialFont"
+                                                    FontSize="Subtitle"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{x:Static material:MaterialFonts.Contacts}" />
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontFamily="Roboto"
+                                                    FontSize="Subtitle"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{Binding CellphoneNumber}" />
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontFamily="MaterialFont"
+                                                    FontSize="Subtitle"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{x:Static material:MaterialFonts.Email}" />
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontFamily="Roboto"
+                                                    FontSize="Subtitle"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{Binding EmailAddress}" />
+                                                <Label
+                                                    Grid.Row="3"
+                                                    Grid.ColumnSpan="2"
+                                                    uxSkeletion:Skeleton.Animation="{uxSkeletion:DefaultAnimation Fade}"
+                                                    uxSkeletion:Skeleton.BackgroundColor="#B0BEC5"
+                                                    uxSkeletion:Skeleton.IsBusy="{Binding BindingContext.IsLoading, Source={x:Reference CustomersCollectionView}}"
+                                                    FontFamily="MaterialFont"
+                                                    FontSize="30"
+                                                    HorizontalOptions="Center"
+                                                    Style="{x:StaticResource ItemText}"
+                                                    Text="{x:Static material:MaterialFonts.ArrowDownDropCircle}">
+
+                                                    <Label.Triggers>
+                                                        <MultiTrigger TargetType="Label">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}" Value="True" />
+                                                            </MultiTrigger.Conditions>
+
+                                                            <Setter Property="Text" Value="{x:Static material:MaterialFonts.ArrowUpDropCircle}" />
+                                                        </MultiTrigger>
+
+                                                    </Label.Triggers>
+                                                </Label>
+
+                                            </Grid>
+                                        </Expander.Header>
+                                        <Expander.ContentTemplate>
+                                            <DataTemplate>
+                                                <Grid
+                                                    Margin="0,20,0,0"
+                                                    ColumnDefinitions="*,*,*"
+                                                    RowDefinitions="Auto,Auto">
+                                                    <Button
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        BackgroundColor="#388E3C"
+                                                        Command="{Binding BindingContext.CallCommand, Source={x:Reference CustomersCollectionView}}"
+                                                        CommandParameter="{Binding .}"
+                                                        CornerRadius="20"
+                                                        FontFamily="MaterialFont"
+                                                        FontSize="25"
+                                                        Text="{x:Static material:MaterialFonts.Phone}"
+                                                        TextColor="White" />
+                                                    <Button
+                                                        Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        BackgroundColor="#FBC02D"
+                                                        Command="{Binding BindingContext.SmsCommand, Source={x:Reference CustomersCollectionView}}"
+                                                        CommandParameter="{Binding .}"
+                                                        CornerRadius="20"
+                                                        FontFamily="MaterialFont"
+                                                        FontSize="25"
+                                                        Text="{x:Static material:MaterialFonts.Message}"
+                                                        TextColor="White" />
+                                                    <Button
+                                                        Grid.Row="0"
+                                                        Grid.Column="2"
+                                                        BackgroundColor="#0091EA"
+                                                        Command="{Binding BindingContext.EmailCommand, Source={x:Reference CustomersCollectionView}}"
+                                                        CommandParameter="{Binding .}"
+                                                        CornerRadius="20"
+                                                        FontFamily="MaterialFont"
+                                                        FontSize="25"
+                                                        Text="{x:Static material:MaterialFonts.Mail}"
+                                                        TextColor="White" />
+
+                                                    <Button
+                                                        Grid.Row="1"
+                                                        Grid.ColumnSpan="3"
+                                                        BackgroundColor="#FF9100"
+                                                        Command="{Binding BindingContext.GoToEditCommand, Source={x:Reference CustomersCollectionView}}"
+                                                        CommandParameter="{Binding .}"
+                                                        CornerRadius="20"
+                                                        FontFamily="MaterialFont"
+                                                        FontSize="25"
+                                                        Text="{x:Static material:MaterialFonts.AccountEdit}"
+                                                        TextColor="White" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </Expander.ContentTemplate>
+
+                                    </Expander>
+
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+    </custompages:CustomTitleViewPage.Content>
+</custompages:CustomTitleViewPage>

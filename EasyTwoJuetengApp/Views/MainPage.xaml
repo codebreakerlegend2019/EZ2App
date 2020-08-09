@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sharedtransitions:SharedTransitionShell
+    x:Class="EasyTwoJuetengApp.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customerViews="clr-namespace:EasyTwoJuetengApp.Views.CustomerRelatedPages"
+    xmlns:entryViews="clr-namespace:EasyTwoJuetengApp.Views.EntriesRelatedPages"
+    xmlns:material="clr-namespace:EasyTwoJuetengApp.Helpers"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:sharedtransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+    xmlns:views="clr-namespace:EasyTwoJuetengApp.Views"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <Shell.Resources>
+        <Color x:Key="NavigationPrimary">#222832</Color>
+        <Style x:Key="BaseStyle" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#222832" />
+            <Setter Property="Shell.ForegroundColor" Value="White" />
+            <Setter Property="Shell.TitleColor" Value="White" />
+            <Setter Property="Shell.DisabledColor" Value="Gray" />
+            <Setter Property="Shell.UnselectedColor" Value="Gray" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="#222832" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="White" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="Gray" />
+            <Setter Property="Shell.TabBarTitleColor" Value="White" />
+        </Style>
+        <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
+    </Shell.Resources>
+
+    <!--<Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid Style="{StaticResource FloutItemStyle}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Margin="5"
+                    HeightRequest="45"
+                    Source="{Binding FlyoutIcon}" />
+                <Label
+                    Grid.Column="1"
+                    FontFamily="Roboto"
+                    FontSize="Medium"
+                    Text="{Binding Title}"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <Shell.FlyoutHeader>
+        <ContentView
+            xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            Margin="0,0,0,0"
+            HeightRequest="200">
+
+            <Grid VerticalOptions="FillAndExpand">
+                <Image
+                    Aspect="AspectFill"
+                    Opacity=".30"
+                    Source="login_background.jpg" />
+                <StackLayout
+                    Padding="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="MaterialFont"
+                                Glyph="{x:Static material:MaterialFonts.Account}"
+                                Size="55"
+                                Color="White" />
+                        </Image.Source>
+                    </Image>
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="AdventPro"
+                        FontSize="Large"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Nickname}"
+                        TextColor="White" />
+                </StackLayout>
+            </Grid>
+
+        </ContentView>
+    </Shell.FlyoutHeader>-->
+    <TabBar>
+        <Tab Title="Entries">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="MaterialFont"
+                    Glyph="{x:Static material:MaterialFonts.Cash}"
+                    Size="50"
+                    Color="White" />
+            </Tab.Icon>
+
+            <ShellContent ContentTemplate="{DataTemplate entryViews:EntriesPage}" />
+
+
+        </Tab>
+
+
+        <Tab Title="Customers">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="MaterialFont"
+                    Glyph="{x:Static material:MaterialFonts.NaturePeople}"
+                    Size="50"
+                    Color="White" />
+            </Tab.Icon>
+
+            <ShellContent ContentTemplate="{DataTemplate customerViews:CustomerPage}" />
+        </Tab>
+        <Tab Title="User Settings">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="MaterialFont"
+                    Glyph="{x:Static material:MaterialFonts.AccountSettings}"
+                    Size="50"
+                    Color="White" />
+            </Tab.Icon>
+
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        </Tab>
+    </TabBar>
+
+
+    <!--<MenuItem Command="{Binding LogoutCommand}" Text="Logout">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="MaterialFont"
+                Glyph="{x:Static material:MaterialFonts.Power}"
+                Size="50"
+                Color="White" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid Style="{StaticResource FloutItemStyle}" VerticalOptions="End">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Margin="5"
+                    HeightRequest="45"
+                    Source="{Binding FlyoutIcon}" />
+                <Label
+                    Grid.Column="1"
+                    FontFamily="Roboto"
+                    FontSize="Medium"
+                    Text="{Binding Title}"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+
+        </DataTemplate>
+    </Shell.MenuItemTemplate>-->
+</sharedtransitions:SharedTransitionShell>
